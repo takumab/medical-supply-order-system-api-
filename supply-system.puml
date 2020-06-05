@@ -1,0 +1,24 @@
+@startuml
+actor Dr.Takuma
+
+header Medical Supply Ordering System
+title System Level Diagram
+
+Dr.Takuma -> System: search for Product
+Dr.Takuma -> System: select Product
+
+activate System
+System -> System: Internal call \nto add \nProduct to Basket
+deactivate System
+
+Dr.Takuma -> System: Checkout
+
+Dr.Takuma <- System: request billing and shipping info
+return (name, address, email)
+
+Dr.Takuma -> System: place Order
+System -> System: <<create Order>>
+
+Dr.Takuma <-- System: Order confirmation with Order number
+
+@enduml

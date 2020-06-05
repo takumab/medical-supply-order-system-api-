@@ -1,0 +1,8 @@
+@startuml
+actor Dr.Takuma
+Dr.Takuma -> ProductService: searchFor(productId: string)
+ProductService -> ProductRepository: searchFor(productId: string)
+ProductRepository -> Product: <<create>>
+note right: Product is \n domain \n object
+
+@enduml
