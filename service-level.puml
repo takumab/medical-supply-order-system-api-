@@ -1,8 +1,21 @@
 @startuml
 actor Dr.Takuma
-Dr.Takuma -> ProductService: searchFor(productId: string)
+participant UILayer
+participant ProductService
+participant ProductRepository
+database DB
+participant Product
+
+
+Dr.Takuma -> UILayer: perform a search
+UILayer -> ProductService: searchFor(productId: string)
 ProductService -> ProductRepository: searchFor(productId: string)
-ProductRepository -> Product: <<create>>
-note right: Product is \n domain \n object
+ProductRepository --> DB: fetch products matching search
+ProductRepository <-- DB: products
+create Product
+ProductRepository -> Product: <<instantiate>>
+ProductService <-- ProductRepository: list of products
+UILayer <-- ProductService: list of products
+Dr.Takuma <-- UILayer: display list of products
 
 @enduml

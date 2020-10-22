@@ -13,7 +13,7 @@
  - User enters billing info and shipping info
  - User places order for Product
  
- ### Domain
+ ### Core Domain
  - Product
     - id/sku
     - title
