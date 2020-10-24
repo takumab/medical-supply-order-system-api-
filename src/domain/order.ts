@@ -34,6 +34,23 @@ interface OrderRepository {
 // Below is this line is outside of the Hexagon which we call the Adapters
 
 // Right Side
+
+// InMemoryOrderRepository
+class InMemoryOrderRepository implements OrderRepository {
+  private readonly anOrder: Order = {
+    id: '135',
+    item: { id: '1', name: 'Black Gloves' }
+  };
+
+  async get(orderNumber: string): Promise<Order> {
+    if (this.anOrder.id !== orderNumber) {
+      throw new Error(`${orderNumber} does not exist!`);
+    }
+    return this.anOrder;
+  }
+}
+
+// DynamoDBOrderRepository
 class DynamoDBOrderRepository implements OrderRepository {
   async get(orderNumber: string): Promise<Order> {
     return {
@@ -48,7 +65,13 @@ function main() {
   const dynamoDBOrderRepository = new DynamoDBOrderRepository();
   const orderService = new OrderService(dynamoDBOrderRepository);
 
+  const inMemoryOrderRepository = new InMemoryOrderRepository();
+  const orderServiceTwo = new OrderService(inMemoryOrderRepository);
+
   orderService.placeOrder('123');
+
+  orderServiceTwo.placeOrder('135');
 }
+
 
 main();
