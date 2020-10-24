@@ -1,6 +1,6 @@
 // Defining the structure of what I'm modeling
 // Data Models
-interface Item  {
+interface Item {
   id: string;
   name: string;
 }
@@ -12,14 +12,14 @@ interface Order {
 
 // Business Logic or Inside
 class OrderService {
-  // Depedency Inversion
+  // Dependency Inversion
   constructor(private orderRepository: OrderRepository) {}
 
   async placeOrder(orderNumber: string): Promise<void> {
-    const order = await this.orderRepository.get(orderNumber)
+    const order = await this.orderRepository.get(orderNumber);
     console.log(order.item);
     console.log('Placing order');
-  };
+  }
 }
 // Driven Port
 // A part of the domain
@@ -43,19 +43,12 @@ class DynamoDBOrderRepository implements OrderRepository {
   }
 }
 
-
-
 // Left side (CLI, HTTP, etc)
 function main() {
-  const dynamoDBOrderRepository = new DynamoDBOrderRepository()
+  const dynamoDBOrderRepository = new DynamoDBOrderRepository();
   const orderService = new OrderService(dynamoDBOrderRepository);
 
   orderService.placeOrder('123');
 }
 
 main();
-
-
-
-
-
