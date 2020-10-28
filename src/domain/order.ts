@@ -12,7 +12,7 @@ interface Order {
 
 // Business Logic or Inside
 class OrderService {
-  // Depedency Inversion
+  // Dependency Inversion
   constructor(private orderRepository: OrderRepository) {}
 
   async placeOrder(orderNumber: string): Promise<void> {

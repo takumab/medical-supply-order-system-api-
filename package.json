@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "test": "npx jest",
-    "start": "npx ts-node src/index.ts"
+    "start": "npx ts-node src/domain/appoinments.ts"
   },
   "keywords": [],
   "author": "",
