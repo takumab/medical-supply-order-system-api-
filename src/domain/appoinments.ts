@@ -15,7 +15,7 @@ interface Customer {
 // Inside Right side
 interface BookAppointmentServiceRepository {
   save(appointment: Appointment): Promise<void>;
-  get(appointmenId: string): Promise<Appointment>;
+  get(appointmentId: string): Promise<Appointment>;
 }
 
 // Missing Inside Left side
