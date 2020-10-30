@@ -3,7 +3,7 @@
 interface Appointment {
   id: string;
   dateTime: Date;
-  customer: Customer;
+  customerId: string;
 }
 
 interface Customer {
@@ -12,31 +12,53 @@ interface Customer {
   email: string;
 }
 
+interface CustomerAppointment {
+  name: string;
+  email: string;
+  dateTime: Date;
+}
+
 // Inside Right side
-interface BookAppointmentServiceRepository {
+interface AppointmentRepository {
   save(appointment: Appointment): Promise<void>;
   get(appointmentId: string): Promise<Appointment>;
+}
+
+interface CustomerRepository {
+  save(customer: Customer): Promise<void>;
+  get(customerId: string): Promise<Customer>;
 }
 
 // Missing Inside Left side
 
 // Inside Center/Business Logic
 class BookAppointmentService {
-  constructor(private bookAppointmentServiceRepository: BookAppointmentServiceRepository) {}
+  constructor(private appointmentRepository: AppointmentRepository) {}
 
   async schedule(anAppointment: Appointment): Promise<void> {
-    await this.bookAppointmentServiceRepository.save(anAppointment);
+    await this.appointmentRepository.save(anAppointment);
     console.log('Appointment booked!');
   }
 
-  async findOne(id: string): Promise<Appointment> {
-    const appointment = this.bookAppointmentServiceRepository.get(id);
-    return appointment;
+}
+
+class QueryCustomerAppointmentService {
+  constructor(private appointmentRepository: AppointmentRepository, private customerRepository: CustomerRepository) {}
+
+  async findOne(id: string): Promise<CustomerAppointment> {
+    const { customerId, dateTime } = await this.appointmentRepository.get(id);
+    const { name, email } = await this.customerRepository.get(customerId);
+
+    return {
+      name,
+      email,
+      dateTime
+    };
   }
 }
 
 // Outside Right Side
-class InMemoryBookAppointmentRepository implements BookAppointmentServiceRepository {
+class InMemoryAppointmentRepository implements AppointmentRepository {
   private appointmentList: Appointment[] = [];
 
   async save(appointment: Appointment): Promise<void> {
@@ -53,29 +75,54 @@ class InMemoryBookAppointmentRepository implements BookAppointmentServiceReposit
   }
 }
 
+class InMemoryCustomerRepository implements CustomerRepository {
+  private customerList: Customer[] = [];
+
+  async get(customerId: string): Promise<Customer> {
+    const found = this.customerList
+      .filter(element => element.id === customerId);
+    const [customer] = found;
+    return customer;
+  }
+
+  async save(customer: Customer): Promise<void> {
+    this.customerList.push(customer);
+    console.log('Customer saved');
+    console.log(`Customers: ${this.customerList}`)
+  }
+}
+
 
 // Outside Left side
 const run = async () => {
+  const customer = {
+    id: '234',
+    name: "Ade",
+    email: 'ade@example.com'
+  };
+
   const appointment: Appointment = {
     id: '123',
     dateTime: new Date(),
-    customer: {
-      id: '234',
-      name: "Ade",
-      email: 'ade@example.com'
-    }
+    customerId: customer.id,
   };
 
   //Book appointment service needs repo
-  const mySQLBookAppointmentRepository = new InMemoryBookAppointmentRepository();
+  const inMemoryAppointmentRepository = new InMemoryAppointmentRepository();
+  const inMemoryCustomerRepository = new InMemoryCustomerRepository();
+
+  // We assume customer exist
+  await inMemoryCustomerRepository.save(customer);
 
   //Set up to schedule an appointment
-  const bookAppointmentService = new BookAppointmentService(mySQLBookAppointmentRepository);
+  const bookAppointmentService = new BookAppointmentService(inMemoryAppointmentRepository);
+
+  const queryAppointmentService = new QueryCustomerAppointmentService(inMemoryAppointmentRepository, inMemoryCustomerRepository);
 
   // Schedule an appointment
   await bookAppointmentService.schedule(appointment)
-  const retreivedAppointment = await bookAppointmentService.findOne(appointment.id)
-  console.log("Here's the appointment you asked for: ", retreivedAppointment);
+  const retrievedCustomerAppointment = await queryAppointmentService.findOne(appointment.id)
+  console.log("Here's the appointment you asked for: ", retrievedCustomerAppointment);
 }
 
 run()
