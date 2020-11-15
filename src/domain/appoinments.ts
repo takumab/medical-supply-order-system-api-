@@ -29,7 +29,6 @@ interface CustomerRepository {
   get(customerId: string): Promise<Customer>;
 }
 
-// Missing Inside Left side
 
 // Inside Center/Business Logic
 class BookAppointmentService {
