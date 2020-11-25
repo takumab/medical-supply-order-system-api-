@@ -1,7 +1,6 @@
 import express, {Request, Response} from 'express';
-const app = express();
 import AWS from 'aws-sdk';
-const port: number = 3000;
+const app = express();
 const dynamoDb = new AWS.DynamoDB({apiVersion: '2012-08-10'});
 
 // Data Models
@@ -83,6 +82,7 @@ app.get("/checkout/:orderNumber", async (req: Request, res: Response) => {
   res.send(`Thanks for purchasing this item: ${name}`);
 })
 
+const port: number = 3000;
 app.listen(port, () => {
   console.log(`Server listening on Port: ${port}`);
 })
