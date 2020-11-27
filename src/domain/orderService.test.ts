@@ -17,9 +17,11 @@ describe('OrderService', () => {
       }
     }
     const orderService = new OrderService(inMemoryOrderRepositoryMock as OrderRepository);
+
     // act
     inMemoryOrderRepositoryMock.get.mockResolvedValue(order);
     const item = await orderService.placeOrder("123");
+
     // assert
     expect(item).toEqual(order.item);
   });
