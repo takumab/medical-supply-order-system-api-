@@ -12,8 +12,10 @@ describe('InMemoryOrderRepository', () => {
       }
     };
     const inMemoryRepository = new InMemoryOrderRepository();
+
     // act
     const actualOrder = await inMemoryRepository.get("123");
+
     // assert
     expect(actualOrder).toEqual(expectedOrder)
   });
@@ -28,9 +30,12 @@ describe('InMemoryOrderRepository', () => {
         price: 200
       }
     };
+
     const inMemoryRepository = new InMemoryOrderRepository();
+
     // act
     const actualOrder = await inMemoryRepository.get("124");
+
     // assert
     expect(actualOrder.id).toEqual(expectedOrder.id);
   });
