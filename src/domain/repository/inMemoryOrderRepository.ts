@@ -21,8 +21,12 @@ export class InMemoryOrderRepository implements OrderRepository {
   ];
 
   async get(orderNumber: string): Promise<Order> {
+    return this.extractOrder(orderNumber);
+  }
+
+  private extractOrder(orderNumber: string) {
     let orderReturned: Order = {id: '', item: {id: '', name: '', price: 1}};
-    for (let index=0; index < this.listOfOrders.length; index++) {
+    for (let index = 0; index < this.listOfOrders.length; index++) {
       if (this.listOfOrders[index]['id'] === orderNumber) {
         orderReturned = this.listOfOrders[index];
       }
