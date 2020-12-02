@@ -7,7 +7,7 @@ export class OrderService {
     this.orderRepository = orderRepository;
   }
 
-  async placeOrder(orderNumber: string): Promise<Item> {
+  async retrieveOrder(orderNumber: string): Promise<Item> {
     const { item } = await this.orderRepository.get(orderNumber);
     return item;
   }

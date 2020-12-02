@@ -20,7 +20,7 @@ describe('OrderService', () => {
 
     // act
     inMemoryOrderRepositoryMock.get.mockResolvedValue(order);
-    const item = await orderService.placeOrder("123");
+    const item = await orderService.retrieveOrder("123");
 
     // assert
     expect(item).toEqual(order.item);
