@@ -6,9 +6,9 @@ const inMemoryOrderRepositoryMock = {
 }
 
 describe('OrderService', () => {
-  it('should return an item', async () => {
+  it('should return an order', async () => {
      // arrange
-    const order = {
+    const expectedOrder = {
       id: '123',
       item: {
         id: '1',
@@ -19,10 +19,10 @@ describe('OrderService', () => {
     const orderService = new OrderService(inMemoryOrderRepositoryMock as OrderRepository);
 
     // act
-    inMemoryOrderRepositoryMock.get.mockResolvedValue(order);
-    const item = await orderService.retrieveOrder("123");
+    inMemoryOrderRepositoryMock.get.mockResolvedValue(expectedOrder);
+    const order = await orderService.retrieveOrder("123");
 
     // assert
-    expect(item).toEqual(order.item);
+    expect(order).toEqual(expectedOrder);
   });
 });

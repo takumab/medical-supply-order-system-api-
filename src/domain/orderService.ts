@@ -1,4 +1,4 @@
-import { Item, OrderRepository } from './repository/orderRepository';
+import { Order, OrderRepository } from './repository/orderRepository';
 
 export class OrderService {
   private orderRepository: OrderRepository;
@@ -7,8 +7,11 @@ export class OrderService {
     this.orderRepository = orderRepository;
   }
 
-  async retrieveOrder(orderNumber: string): Promise<Item> {
-    const { item } = await this.orderRepository.get(orderNumber);
-    return item;
+  async retrieveOrder(orderNumber: string): Promise<Order> {
+    try {
+      return await this.orderRepository.get(orderNumber);
+    } catch (e) {
+      return e.stack
+    }
   }
 }
