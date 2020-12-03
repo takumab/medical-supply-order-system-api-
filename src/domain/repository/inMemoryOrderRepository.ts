@@ -8,7 +8,8 @@ export class InMemoryOrderRepository implements OrderRepository {
         id: '1',
         name: 'EKG',
         price: 100
-      }
+      },
+      total: 100
     },
     {
       id: '124',
@@ -16,8 +17,9 @@ export class InMemoryOrderRepository implements OrderRepository {
         id: '2',
         name: 'Defibrillator',
         price: 200
-      }
-    }
+      },
+      total: 200
+    },
   ];
 
   async get(orderNumber: string): Promise<Order> {
@@ -29,7 +31,7 @@ export class InMemoryOrderRepository implements OrderRepository {
   }
 
   private getOrderBy(orderNumber: string) {
-    let orderReturned: Order = {id: '', item: {id: '', name: '', price: 1}};
+    let orderReturned: Order = {id: '', item: {id: '', name: '', price: 1}, total: 0};
     for (const order of this.listOfOrders) {
       if (order.id === orderNumber) {
         orderReturned = order;

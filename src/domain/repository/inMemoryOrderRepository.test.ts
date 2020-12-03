@@ -9,7 +9,8 @@ describe('InMemoryOrderRepository', () => {
         id: '1',
         name: 'EKG',
         price: 100
-      }
+      },
+      total: 100
     };
     const inMemoryRepository = new InMemoryOrderRepository();
 

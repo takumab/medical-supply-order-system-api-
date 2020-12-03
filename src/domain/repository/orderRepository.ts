@@ -7,7 +7,8 @@ export interface Item {
 
 export interface Order {
   id: string;
-  item: Item;
+  item: Item | Item[];
+  total: number;
 }
 
 // Right side Inside (Port)
