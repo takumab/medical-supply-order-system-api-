@@ -20,23 +20,12 @@ describe('InMemoryOrderRepository', () => {
     expect(actualOrder).toEqual(expectedOrder)
   });
 
-  it('should return an order with correct order number/id', async () => {
+  it('should throw error when order number not found', async () => {
+    expect.assertions(1);
     // arrange
-    const expectedOrder = {
-      id: '124',
-      item: {
-        id: '2',
-        name: 'Defibrillator',
-        price: 200
-      }
-    };
+    const inMemoryOrderRepository = new InMemoryOrderRepository();
 
-    const inMemoryRepository = new InMemoryOrderRepository();
-
-    // act
-    const actualOrder = await inMemoryRepository.get("124");
-
-    // assert
-    expect(actualOrder.id).toEqual(expectedOrder.id);
+    // act and assert
+    await expect(inMemoryOrderRepository.get("125")).rejects.toThrow(new Error("Order number does not exist!"));
   });
 });

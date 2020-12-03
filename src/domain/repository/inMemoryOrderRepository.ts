@@ -21,7 +21,11 @@ export class InMemoryOrderRepository implements OrderRepository {
   ];
 
   async get(orderNumber: string): Promise<Order> {
-    return this.getOrderBy(orderNumber);
+    const order = this.getOrderBy(orderNumber);
+    if (orderNumber !== order.id) {
+      throw new Error("Order number does not exist!");
+    }
+    return order;
   }
 
   private getOrderBy(orderNumber: string) {
