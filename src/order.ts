@@ -9,7 +9,7 @@ interface Item {
   name: string;
   price: number;
 }
-
+// Order is an agreement of purchase
 interface Order {
   id: string;
   item: Item;

@@ -21,7 +21,7 @@
     - price
  - Basket
    - total
-   - Product
+   - Products
  - Order
    - id/number
    - Product

@@ -1,5 +1,5 @@
 // Data models/Domain models (move into own folder)
-export interface Item {
+export interface Product {
   id: string;
   name: string;
   price: number;
@@ -7,7 +7,7 @@ export interface Item {
 
 export interface Order {
   id: string;
-  item: Item | Item[];
+  item: Product | Product[];
   total: number;
 }
 
