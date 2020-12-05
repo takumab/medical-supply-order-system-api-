@@ -77,7 +77,7 @@ app.get("/checkout/:orderNumber", async (req: Request, res: Response) => {
   const dynamoDBOrderRepository = new DynamoDBOrderRepository();
   const orderService = new OrderService(dynamoDBOrderRepository);
   const itemReturned = await orderService.placeOrder(req.params.orderNumber);
-  const { name } = await itemReturned
+  const { name } = itemReturned
 
   res.send(`Thanks for purchasing this item: ${name}`);
 })

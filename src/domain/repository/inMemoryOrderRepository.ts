@@ -1,4 +1,5 @@
-import { Order, OrderRepository } from './orderRepository';
+import { OrderRepository } from './orderRepository';
+import { Order } from '../model/order';
 
 export class InMemoryOrderRepository implements OrderRepository {
   private readonly listOfOrders: Order[] = [

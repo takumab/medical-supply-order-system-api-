@@ -1,4 +1,5 @@
-import { Order, OrderRepository } from './repository/orderRepository';
+import { OrderRepository } from './repository/orderRepository';
+import { Order } from './model/order';
 
 export class OrderService {
   private orderRepository: OrderRepository;
