@@ -21,6 +21,6 @@ describe('Shopping Cart Service', () => {
     await shoppingCartService.add(product)
     // assert
     expect(inMemoryCatalogMock.get).toHaveBeenCalledWith(product.id);
-    expect(shoppingCartService.shoppingCartProductsList).toEqual(listOfProducts);
+    expect(shoppingCartService.showProductsInShoppingCart).toEqual(listOfProducts);
   });
 });
