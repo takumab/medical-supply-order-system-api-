@@ -1,0 +1,27 @@
+@startuml
+
+interface Catalog
+interface Inventory
+
+
+
+class CatalogCLI implements Catalog
+class InMemoryInventory implements Inventory
+ShoppingCartService --> Catalog
+ShoppingCartService --> Inventory
+
+class ShoppingCartService {
+    - shoppingCartProductList: Product[]
+    +add(product: Product);
+    +showProductsInShoppingCartList();
+}
+
+class CatalogCLI {
+    +selectProduct();
+}
+
+class InMemoryInventory {
+    +get(productId: string);
+}
+
+@enduml
