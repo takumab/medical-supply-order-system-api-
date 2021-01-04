@@ -8,7 +8,9 @@ interface Inventory
 class CatalogCLI implements Catalog
 class InMemoryInventory implements Inventory
 ShoppingCartService --> Catalog
+note on link: reference  Catalog
 ShoppingCartService --> Inventory
+note on link: reference  Inventory
 
 class ShoppingCartService {
     - shoppingCartProductList: Product[]
