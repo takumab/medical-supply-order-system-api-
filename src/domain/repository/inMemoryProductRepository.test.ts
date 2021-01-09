@@ -17,7 +17,7 @@ describe('In Memory Product Repository', () => {
   it('should return all products', async () => {
     // arrange
     const inMemoryProductRepository = new InMemoryProductRepository();
-    const expectedProduct = [
+    const expectedProducts = [
       {
         id: '321',
         name: 'Paracetamol',
@@ -32,6 +32,6 @@ describe('In Memory Product Repository', () => {
     // act
     const products = await inMemoryProductRepository.findAll();
     // assert
-    expect(products).toEqual(expectedProduct)
+    expect(products).toEqual(expectedProducts)
   });
 });
